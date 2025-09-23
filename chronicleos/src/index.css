@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-obsidian text-parchment antialiased;
+    background-image: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(3,7,18,0.9));
+    background-color: theme('colors.obsidian');
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    color: theme('colors.parchment');
+  }
+
+  /* Parchment panel style */
+  .panel-parchment {
+    background: linear-gradient(180deg, rgba(246,239,211,0.95), rgba(237,226,191,0.95));
+    color: theme('colors.ink');
+    border: 1px solid rgba(203,161,53,0.12);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+}
