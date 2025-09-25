@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 function TrustBadge({ children }) {
   return (
@@ -12,6 +12,68 @@ function TrustBadge({ children }) {
 }
 
 export default function Hero() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    // Particle animation effect
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [];
+    let animationId;
+    
+    function resize() { 
+      width = canvas.width = canvas.clientWidth; 
+      height = canvas.height = canvas.clientHeight; 
+    }
+    
+    function init() { 
+      resize(); 
+      particles = Array.from({length: Math.max(12, Math.floor(width/120))}).map(() => ({ 
+        x: Math.random() * width, 
+        y: Math.random() * height, 
+        r: Math.random() * 1.8 + 0.2, 
+        vx: (Math.random() - 0.5) * 0.2, 
+        vy: -Math.random() * 0.2 
+      })); 
+    }
+    
+    function step() { 
+      ctx.clearRect(0, 0, width, height); 
+      ctx.fillStyle = 'rgba(255,240,200,0.06)'; 
+      particles.forEach(p => { 
+        ctx.beginPath(); 
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); 
+        ctx.fill(); 
+        p.x += p.vx; 
+        p.y += p.vy; 
+        if (p.y < -10) p.y = height + 10; 
+        if (p.x < -10) p.x = width + 10; 
+        if (p.x > width + 10) p.x = -10; 
+      }); 
+      animationId = requestAnimationFrame(step); 
+    }
+    
+    const handleResize = () => {
+      resize();
+      init();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    init(); 
+    step();
+    
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
   return (
     <section className="relative mt-12 sm:mt-20">
       <div className="absolute inset-0 pointer-events-none opacity-40" aria-hidden>
@@ -34,21 +96,11 @@ export default function Hero() {
         </div>
       </div>
 
-      <canvas id="particles" className="pointer-events-none absolute inset-0" aria-hidden="true" />
-      <script dangerouslySetInnerHTML={{__html: `
-        (function(){
-          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          const canvas = document.getElementById('particles');
-          if(!canvas) return;
-          const ctx = canvas.getContext('2d');
-          let width, height, particles = [];
-          function resize(){ width = canvas.width = canvas.clientWidth; height = canvas.height = canvas.clientHeight; }
-          function init(){ resize(); particles = Array.from({length: Math.max(12, Math.floor(width/120))}).map(()=>({ x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.8+0.2, vx: (Math.random()-0.5)*0.2, vy: -Math.random()*0.2 })); }
-          function step(){ ctx.clearRect(0,0,width,height); ctx.fillStyle='rgba(255,240,200,0.06)'; particles.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); p.x+=p.vx; p.y+=p.vy; if(p.y< -10) p.y=height+10; if(p.x< -10) p.x=width+10; if(p.x>width+10) p.x=-10; }); requestAnimationFrame(step); }
-          window.addEventListener('resize', init);
-          init(); step();
-        })();
-      `}} />
+      <canvas 
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0" 
+        aria-hidden="true" 
+      />
     </section>
   )
 }
