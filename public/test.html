@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChronicleOS - Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(180deg, #0a0a0a, #041022);
+            color: #f6efd3;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .status {
+            background: rgba(246, 239, 211, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ChronicleOS - GitHub Pages Test</h1>
+        <div class="status">
+            <p>This is a test page to verify GitHub Pages deployment works.</p>
+            <p>If you can see this, the basic deployment is working.</p>
+            <p id="js-test">JavaScript test: Loading...</p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple JavaScript test without ES modules
+        document.getElementById('js-test').textContent = 'JavaScript test: Working!';
+        console.log('Basic JavaScript is working');
+    </script>
+</body>
+</html>

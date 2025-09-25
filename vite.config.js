@@ -16,7 +16,7 @@ export default defineConfig({
       }
     }
   ],
-  base: './', // Use relative paths for better GitHub Pages compatibility
+  base: '/', // Change back to absolute paths for GitHub Pages
   build: {
     outDir: 'dist',
     sourcemap: true,
@@ -27,7 +27,10 @@ export default defineConfig({
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash].[ext]'
       }
-    }
+    },
+    // Ensure proper module format
+    target: 'esnext',
+    minify: 'esbuild'
   },
   server: {
     // Fix MIME type issues in development
