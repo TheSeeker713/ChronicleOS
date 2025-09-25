@@ -19,6 +19,20 @@ export default defineConfig({
   base: './', // Use relative paths for better GitHub Pages compatibility
   build: {
     outDir: 'dist',
-    sourcemap: true
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        // Ensure JavaScript files have .js extension, not .jsx
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    }
+  },
+  server: {
+    // Fix MIME type issues in development
+    fs: {
+      strict: false
+    }
   }
 })
