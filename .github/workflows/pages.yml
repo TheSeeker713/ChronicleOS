@@ -1,4 +1,4 @@
-name: Build and deploy Vite app (chronicleos) to GitHub Pages (gh-pages branch)
+name: Build and deploy Vite app to GitHub Pages
 
 on:
   push:
@@ -17,19 +17,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install deps (chronicleos)
-        working-directory: ./chronicleos
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build (chronicleos)
-        working-directory: ./chronicleos
+      - name: Build project
         run: npm run build
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./chronicleos/dist
+          publish_dir: ./dist
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
