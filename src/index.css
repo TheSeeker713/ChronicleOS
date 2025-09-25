@@ -3,21 +3,35 @@
 @tailwind utilities;
 
 @layer base {
+  /* Fallback styles for when Tailwind doesn't load */
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Merriweather', Georgia, serif;
+  }
+  
   body {
     @apply bg-obsidian text-parchment antialiased;
     background-image: linear-gradient(180deg, rgba(10,10,10,0.9), rgba(3,7,18,0.9));
-    background-color: theme('colors.obsidian');
+    background-color: #0a0a0a; /* fallback color */
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
-    color: theme('colors.parchment');
+    color: #f6efd3; /* fallback color */
+  }
+
+  /* Ensure root div takes full height */
+  #root {
+    min-height: 100vh;
+    width: 100%;
   }
 
   /* Parchment panel style */
   .panel-parchment {
     background: linear-gradient(180deg, rgba(246,239,211,0.95), rgba(237,226,191,0.95));
-    color: theme('colors.ink');
+    color: #0b1320; /* fallback color */
     border: 1px solid rgba(203,161,53,0.12);
   }
 
